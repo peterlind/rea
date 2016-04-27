@@ -41,6 +41,8 @@ class RobotGame
   end
 
   def left
+    return unless @has_placement
+
     new_index = ORDERED_VALID_DIRECTIONS.index(@current_facing) - 1
     new_direction = ORDERED_VALID_DIRECTIONS[new_index]
 
@@ -48,6 +50,8 @@ class RobotGame
   end
 
   def right
+    return unless @has_placement
+
     current_index = ORDERED_VALID_DIRECTIONS.index(@current_facing)
     new_direction = ORDERED_VALID_DIRECTIONS.rotate[current_index]
 
