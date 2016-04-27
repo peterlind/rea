@@ -26,4 +26,29 @@ describe RobotGame do
       expect(game.report).to eq([1, 2, 'SOUTH'])
     end
   end
+  context "command sequence" do
+    it "is a noop to issue a command before placement" do
+      expect(game.report).to eq(nil)
+    end
+  end
+  context "moving" do
+    it "accepts movement within grid" do
+      game.place(0, 0, 'NORTH')
+      game.move
+      expect(game.report).to eq([0, 1, 'NORTH'])
+
+      game.place(0, 0, 'EAST')
+      game.move
+      expect(game.report).to eq([1, 0, 'EAST'])
+    end
+    it "does nothing is movement would put robot off grid" do
+      game.place(0, 0, 'SOUTH')
+      game.move
+      expect(game.report).to eq([0, 0, 'SOUTH'])
+
+      game.place(0, 0, 'WEST')
+      game.move
+      expect(game.report).to eq([0, 0, 'WEST'])
+    end
+  end
 end

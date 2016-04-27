@@ -9,27 +9,53 @@ class RobotGame
   ].freeze
 
   def initialize
+    @has_placement = false
   end
 
   def place(x, y, facing = 'NORTH')
-    ensure_on_board(x, y)
-    ensure_valid_direction(facing)
+    ensure_on_board!(x, y)
+    ensure_valid_direction!(facing)
     @current_x = x
     @current_y = y
     @current_facing = facing
+    @has_placement = true
+  end
+
+  def move
+    return unless @has_placement
+
+    case @current_facing
+    when 'EAST'
+      new_x = @current_x + 1
+      @current_x = new_x if on_board?(new_x, @current_y)
+    when 'WEST'
+      new_x = @current_x - 1
+      @current_x = new_x if on_board?(new_x, @current_y)
+    when 'NORTH'
+      new_y = @current_y + 1
+      @current_y = new_y if on_board?(@current_x, new_y)
+    when 'SOUTH'
+      new_y = @current_y - 1
+      @current_y = new_y if on_board?(@current_x, new_y)
+    end
   end
 
   def report
+    return unless @has_placement
+
     [@current_x, @current_y, @current_facing]
   end
 
   private
-  def ensure_valid_direction(direction)
+  def ensure_valid_direction!(direction)
     raise "Invalid direction (#{direction})" unless VALID_DIRECTIONS.include?(direction)
   end
 
-  def ensure_on_board(x, y)
-    raise "Invalid x (#{x})" unless VALID_X.include?(x)
-    raise "Invalid y (#{x})" unless VALID_Y.include?(y)
+  def ensure_on_board!(x, y)
+    raise "Invalid position (x: #{x}, y: #{y})" unless on_board?(x, y)
+  end
+
+  def on_board?(x, y)
+    VALID_X.include?(x) && VALID_Y.include?(y)
   end
 end
