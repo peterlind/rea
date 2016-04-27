@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RobotGame
   VALID_X = 0..4
   VALID_Y = 0..4
