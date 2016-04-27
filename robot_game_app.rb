@@ -1,3 +1,5 @@
+#! /usr/bin/env ruby
+
 require "./robot_game"
 
 game = RobotGame.new
