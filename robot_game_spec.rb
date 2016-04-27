@@ -83,4 +83,25 @@ describe RobotGame do
       expect(game.report).to eq([0, 0, 'EAST'])
     end
   end
+
+  context "game examples" do
+    it "passes example a" do
+      game.place(0, 0, 'NORTH')
+      game.move
+      expect(game.report).to eq([0, 1, 'NORTH'])
+    end
+    it "passes example b" do
+      game.place(0, 0, 'NORTH')
+      game.left
+      expect(game.report).to eq([0, 0, 'WEST'])
+    end
+    it "passes example c" do
+      game.place(1, 2, 'EAST')
+      game.move
+      game.move
+      game.left
+      game.move
+      expect(game.report).to eq([3, 3, 'NORTH'])
+    end
+  end
 end
