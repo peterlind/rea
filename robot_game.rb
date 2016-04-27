@@ -13,6 +13,7 @@ class RobotGame
   end
 
   def place(x, y, facing = 'NORTH')
+    x, y = [x, y].map(&:to_i)
     return unless on_board?(x, y)
     return unless valid_direction?(facing)
     @current_x = x
