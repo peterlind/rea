@@ -1,6 +1,7 @@
 require "./robot_game"
 describe RobotGame do
   let(:game) { RobotGame.new }
+
   context "initial placement" do
     it "accepts placement" do
       game.place(0, 0, "NORTH")
@@ -26,11 +27,13 @@ describe RobotGame do
       expect(game.report).to eq([1, 2, 'SOUTH'])
     end
   end
+
   context "command sequence" do
     it "is a noop to issue a command before placement" do
       expect(game.report).to eq(nil)
     end
   end
+
   context "moving" do
     it "accepts movement within grid" do
       game.place(0, 0, 'NORTH')
@@ -49,6 +52,35 @@ describe RobotGame do
       game.place(0, 0, 'WEST')
       game.move
       expect(game.report).to eq([0, 0, 'WEST'])
+    end
+  end
+
+  context "turning" do
+    it "changes direction after left/right command" do
+      game.place(0, 0, 'NORTH')
+      game.left
+      expect(game.report).to eq([0, 0, 'WEST'])
+
+      game.right
+      expect(game.report).to eq([0, 0, 'NORTH'])
+
+      game.right
+      expect(game.report).to eq([0, 0, 'EAST'])
+
+      game.left
+      game.left
+      game.left
+      expect(game.report).to eq([0, 0, 'SOUTH'])
+      game.left
+      expect(game.report).to eq([0, 0, 'EAST'])
+
+      game.right
+      expect(game.report).to eq([0, 0, 'SOUTH'])
+      game.right
+      expect(game.report).to eq([0, 0, 'WEST'])
+      game.right
+      game.right
+      expect(game.report).to eq([0, 0, 'EAST'])
     end
   end
 end

@@ -1,10 +1,10 @@
 class RobotGame
   VALID_X = 0..4
   VALID_Y = 0..4
-  VALID_DIRECTIONS = [
+  ORDERED_VALID_DIRECTIONS = [
     'NORTH'.freeze,
-    'SOUTH'.freeze,
     'EAST'.freeze,
+    'SOUTH'.freeze,
     'WEST'.freeze,
   ].freeze
 
@@ -40,6 +40,20 @@ class RobotGame
     end
   end
 
+  def left
+    new_index = ORDERED_VALID_DIRECTIONS.index(@current_facing) - 1
+    new_direction = ORDERED_VALID_DIRECTIONS[new_index]
+
+    @current_facing = new_direction
+  end
+
+  def right
+    current_index = ORDERED_VALID_DIRECTIONS.index(@current_facing)
+    new_direction = ORDERED_VALID_DIRECTIONS.rotate[current_index]
+
+    @current_facing = new_direction
+  end
+
   def report
     return unless @has_placement
 
@@ -48,7 +62,7 @@ class RobotGame
 
   private
   def ensure_valid_direction!(direction)
-    raise "Invalid direction (#{direction})" unless VALID_DIRECTIONS.include?(direction)
+    raise "Invalid direction (#{direction})" unless ORDERED_VALID_DIRECTIONS.include?(direction)
   end
 
   def ensure_on_board!(x, y)
