@@ -20,6 +20,7 @@ end
 unless commands.size > 0
   puts "Usage:"
   puts "\trobot_game_app.rb COMMANDS"
+  exit 1
 end
 
 commands.each do |command|
