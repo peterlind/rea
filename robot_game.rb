@@ -13,8 +13,8 @@ class RobotGame
   end
 
   def place(x, y, facing = 'NORTH')
-    ensure_on_board!(x, y)
-    ensure_valid_direction!(facing)
+    return unless on_board?(x, y)
+    return unless valid_direction?(facing)
     @current_x = x
     @current_y = y
     @current_facing = facing
@@ -65,12 +65,8 @@ class RobotGame
   end
 
   private
-  def ensure_valid_direction!(direction)
-    raise "Invalid direction (#{direction})" unless ORDERED_VALID_DIRECTIONS.include?(direction)
-  end
-
-  def ensure_on_board!(x, y)
-    raise "Invalid position (x: #{x}, y: #{y})" unless on_board?(x, y)
+  def valid_direction?(direction)
+    ORDERED_VALID_DIRECTIONS.include?(direction)
   end
 
   def on_board?(x, y)
